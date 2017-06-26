@@ -13,6 +13,8 @@ import java.sql.Date;
 public class Counselor {
 
     private int id;
+    private String name;
+    private String description;
     private String first_name;
     private String nick_name;
     private String last_name;
@@ -30,6 +32,16 @@ public class Counselor {
     }
 
     public Counselor(int id, String first_name, String nick_name, String last_name, String telephone, String email) {
+        this.first_name = first_name;
+        this.nick_name = nick_name;
+        this.last_name = last_name;
+        this.telephone = telephone;
+        this.email = email;
+    }
+
+    public Counselor(String name, String description, String first_name, String nick_name, String last_name, String telephone, String email) {
+        this.name = name;
+        this.description = description;
         this.first_name = first_name;
         this.nick_name = nick_name;
         this.last_name = last_name;
@@ -94,7 +106,7 @@ public class Counselor {
         }
     }
 
-    public static Counselor findCounselorByid(int id) {
+    public static Counselor findCounselorById(int id) {
         Counselor counselor = null;
         String sql = String.format("SELECT * FROM counselors WHERE id = '%d' ;", id);
         ResultSet rs = SqlRunner.executeQuery(sql);
@@ -108,6 +120,32 @@ public class Counselor {
                 String email = rs.getString("email");
 
                 counselor = new Counselor(id, firstName, nickName, lastName, telephone, email);
+            }
+        } catch (Exception ex) {
+            System.exit(0);
+        } finally {
+            SqlRunner.closeConnection();
+        }
+        return counselor;
+    }
+
+
+    public static Counselor findCounselorBySubject(String name) {
+        Counselor counselor = null;
+        String sql = String.format("SELECT subjects.name, subjects.description, counselors.first_name, counselors.nick_name, counselors.last_name, counselors.telephone, counselors.email FROM subjects JOIN counselors ON counselors.id = subjects.counselor_id WHERE subjects.name = '%d';", name);
+        ResultSet rs = SqlRunner.executeQuery(sql);
+        try {
+            while(rs.next()) {
+                //name = rs.getString("name");
+                String subject = rs.getString("name");
+                String description = rs.getString("description");
+                String firstName = rs.getString("first_name");
+                String nickName = rs.getString("nick_name");
+                String lastName = rs.getString("last_name");
+                String telephone = rs.getString("telephone");
+                String email = rs.getString("email");
+
+                counselor = new Counselor(name, description, firstName, nickName, lastName, telephone, email);
             }
         } catch (Exception ex) {
             System.exit(0);
