@@ -7,10 +7,6 @@ package example.codeclan.com.wrestling;
 public class Runner {
 
     public static void main(String[] args) {
-        //Counselor.all();
-
-        //Counselor searchCounselor = Counselor.findCounselorById(1);
-        //System.out.println(searchCounselor.getFirst_name());
 
         SearchResult searchSubject = SearchResult.findCounselorBySubject("Hypnosis");
         System.out.println(searchSubject.getName());

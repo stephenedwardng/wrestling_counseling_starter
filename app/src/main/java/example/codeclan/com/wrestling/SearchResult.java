@@ -92,7 +92,5 @@ public class SearchResult {
         return searchResult;
     }
 
-
-
 }
 
